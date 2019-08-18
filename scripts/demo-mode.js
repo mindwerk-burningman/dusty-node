@@ -1,14 +1,11 @@
 const NoteEngine = require('../lib/note-engine');
-const DustMoreClient = require('../lib/client');
 const RootManager = require('../lib/root-manager');
 const { ADDRESS_BASS, ADDRESS_PADS, ADDRESS_SPARKLES } = require('../lib/constants');
 
-const client = new DustMoreClient('127.0.0.1', 9001);
 const rootManager = new RootManager();
 
 const bassEngine = new NoteEngine({
   rootManager,
-  client,
   address: ADDRESS_BASS,
   octaveOffset: 4,
   octaveRange: 1,
@@ -20,7 +17,6 @@ const bassEngine = new NoteEngine({
 
 const padsEngine = new NoteEngine({
   rootManager,
-  client,
   address: ADDRESS_PADS,
   octaveOffset: 6,
   octaveRange: 2,
@@ -33,7 +29,6 @@ const padsEngine = new NoteEngine({
 
 const sparklesEngine = new NoteEngine({
   rootManager,
-  client,
   address: ADDRESS_SPARKLES,
   octaveOffset: 6,
   octaveRange: 2,
