@@ -1,0 +1,45 @@
+{
+  "name": "dust-tunnel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "startup": "sh scripts/startup.sh",
+    "startup:dev": "sh scripts/startup-dev.sh --lights=true",
+    "startup:dev:no-lights": "sh scripts/startup-dev.sh",
+    "dev": "npm run stream && npm run start",
+    "stream:dev": "muse-player -f data/muselab_recording.muse -s osc.udp://127.0.0.1:4224",
+    "stream": "muse-io --device Muse-98A9 --osc osc.udp://localhost:4224",
+    "sketch": "node local/sketch.js",
+    "test": "tape-watch tests/*.js tests/**/*.js | faucet",
+    "update:pi": "scp lights/srv3.py pi@10.0.1.5:/home/pi/run/srv3.py"
+  },
+  "devDependencies": {
+    "eslint": "*",
+    "eslint-config-airbnb-base": "*",
+    "eslint-config-prettier": "*",
+    "eslint-config-standard": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-node": "*",
+    "eslint-plugin-prettier": "*",
+    "eslint-plugin-promise": "*",
+    "eslint-plugin-standard": "*",
+    "faucet": "*",
+    "nodemon": "*",
+    "prettier": "*",
+    "tape": "*",
+    "tape-watch": "*"
+  },
+  "author": "solstice.sebastian",
+  "license": "MIT",
+  "dependencies": {
+    "@solstice.sebastian/constants": "^1.1.3",
+    "@solstice.sebastian/simple-moving-average": "^1.1.0",
+    "dotenv": "^6.0.0",
+    "easymidi": "^1.0.2",
+    "lodash": "^4.17.10",
+    "osc": "^2.2.3",
+    "random": "^2.0.12"
+  }
+}
