@@ -42,7 +42,7 @@ const sparklesEngine = new NoteEngine({
   address: ADDRESS_SPARKLES,
   octaveOffset: 6,
   octaveRange: 2,
-  noteOnProbability: 0.14,
+  noteOnProbability: 0.4,
   minVelocity: 40,
   maxVelocity: 80,
   maxDuration: 240,
@@ -69,7 +69,7 @@ const thetaEngine = new ControllerEngine({
 });
 
 const gammaEngine = new ControllerEngine({
-  address: ADDRESS_ALPHA,
+  address: ADDRESS_GAMMA,
   channel: 3,
   controllerNumber: 15,
 });
