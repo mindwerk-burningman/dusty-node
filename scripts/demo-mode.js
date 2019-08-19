@@ -34,6 +34,7 @@ const padsEngine = new NoteEngine({
   maxVelocity: 80,
   maxDuration: 5000,
   notesAtATime: 5,
+  channels: [4, 5, 6, 7],
 });
 
 const sparklesEngine = new NoteEngine({
@@ -46,6 +47,7 @@ const sparklesEngine = new NoteEngine({
   maxVelocity: 80,
   maxDuration: 240,
   notesAtATime: 6,
+  channels: [8, 9, 10, 11],
 });
 
 const alphaEngine = new ControllerEngine({
@@ -72,18 +74,23 @@ const gammaEngine = new ControllerEngine({
   controllerNumber: 15,
 });
 
-const waveEngines = [alphaEngine, betaEngine, thetaEngine, gammaEngine];
-const engines = [bassEngine, padsEngine, sparklesEngine, ...waveEngines];
+const controlEngines = [alphaEngine, betaEngine, thetaEngine, gammaEngine];
+const soundEngines = [bassEngine, padsEngine, sparklesEngine];
 
 const valueMap = new Map();
-valueMap.set(bassEngine.address, Math.random());
-valueMap.set(padsEngine.address, Math.random());
-valueMap.set(sparklesEngine.address, Math.random());
 
-const VAL_INCR = 0.05;
-const RUN_INTERVAL = 1000;
+// initialize starting val
+[...soundEngines, ...controlEngines].forEach((engine) => {
+  valueMap.set(engine.address, Math.random());
+});
 
-const getNewVal = (val) => {
+const SOUND_VAL_INCR = 0.05;
+const SOUND_UPDATE_INTERVAL = 1000;
+
+const CONTROL_VAL_INCR = 1;
+const CONTROL_UPDATE_INTERVAL = 250;
+
+const getNewVal = (val, incr) => {
   if (val >= 1) {
     return val - 0.75;
   }
@@ -92,23 +99,39 @@ const getNewVal = (val) => {
     return val + 0.25;
   }
 
-  return Math.random() > 0.5 ? val + VAL_INCR : val - VAL_INCR;
+  return Math.random() > 0.5 ? val + incr : val - incr;
 };
 
-const updateValues = () => {
-  engines.forEach((engine) => {
+const updateSoundValues = () => {
+  soundEngines.forEach((engine) => {
     const currVal = valueMap.get(engine.address);
-    const newVal = getNewVal(currVal);
+    const newVal = getNewVal(currVal, SOUND_VAL_INCR);
     valueMap.set(engine.address, newVal);
   });
 };
 
-const run = () => {
-  updateValues();
+const updateControlValues = () => {
+  controlEngines.forEach((engine) => {
+    const currVal = valueMap.get(engine.address);
+    const newVal = getNewVal(currVal, CONTROL_VAL_INCR);
+    valueMap.set(engine.address, newVal);
+  });
+};
+
+const updateSoundEngines = () => {
+  updateSoundValues();
   // send to engines latest value
-  engines.forEach((engine) => {
+  soundEngines.forEach((engine) => {
     engine.update(valueMap.get(engine.address));
   });
 };
 
-setInterval(run, RUN_INTERVAL);
+const updateControlEngines = () => {
+  updateControlValues();
+  controlEngines.forEach((engine) => {
+    engine.update(valueMap.get(engine.address));
+  });
+};
+
+setInterval(updateSoundEngines, SOUND_UPDATE_INTERVAL);
+setInterval(updateControlEngines, CONTROL_UPDATE_INTERVAL);
