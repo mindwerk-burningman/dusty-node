@@ -66,6 +66,23 @@ const quads = [0, 1, 2, 3].map((i) => {
   });
 });
 
+const drawBorder = (q) => {
+  const y = q.origin.y + q.height;
+  ctx.beginPath();
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 2;
+  ctx.moveTo(0, y);
+  ctx.lineTo(windowWidth, y);
+  ctx.stroke();
+};
+
+const drawBackground = (_quads) => {
+  _quads.forEach((q) => {
+    // drawInfo(q);
+    drawBorder(q);
+  });
+};
+
 const ctx = canvas.getContext('2d');
 ctx.fillRect(0, 0, windowWidth, windowHeight);
 
@@ -82,7 +99,8 @@ const drawDot = (quad) => {
 const shift = () => {
   const prevFrame = ctx.getImageData(dotSize, 0, ctx.canvas.width / 2, ctx.canvas.height);
   ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, windowWidth, windowHeight);
+  // ctx.fillRect(0, 0, windowWidth, windowHeight);
+  drawBackground(quads);
   ctx.putImageData(prevFrame, 0, 0);
 };
 
@@ -93,6 +111,8 @@ const update = (valMap) => {
   });
   shift();
 };
+
+drawBackground(quads);
 
 const wsClient = new WebSocket('ws://localhost:4321');
 wsClient.addEventListener('open', () => {
