@@ -10,24 +10,27 @@ const {
   ADDRESS_GAMMA,
 } = require('../lib/constants');
 const ControllerEngine = require('../lib/controller-engine');
+const { resetAll } = require('../lib/reset-all');
 
+// resetAll();
 const rootManager = new RootManager();
 
 const bassEngine = new NoteEngine({
   rootManager,
   address: ADDRESS_BASS,
-  octaveOffset: 4,
+  octaveOffset: 3,
   octaveRange: 1,
-  noteOnProbability: 0.25,
+  noteOnProbability: 0.6,
   minVelocity: 40,
   maxVelocity: 80,
   maxDuration: 3000,
+  // channel: 3,
 });
 
 const padsEngine = new NoteEngine({
   rootManager,
   address: ADDRESS_PADS,
-  octaveOffset: 6,
+  octaveOffset: 5,
   octaveRange: 2,
   noteOnProbability: 0.5,
   minVelocity: 40,
@@ -52,30 +55,31 @@ const sparklesEngine = new NoteEngine({
 
 const alphaEngine = new ControllerEngine({
   address: ADDRESS_ALPHA,
-  channel: 0,
-  controllerNumber: 12,
+  channel: 14,
+  controllerNumber: 1,
 });
 
 const betaEngine = new ControllerEngine({
   address: ADDRESS_BETA,
-  channel: 1,
-  controllerNumber: 13,
+  channel: 14,
+  controllerNumber: 2,
 });
 
 const thetaEngine = new ControllerEngine({
   address: ADDRESS_THETA,
-  channel: 2,
-  controllerNumber: 14,
+  channel: 14,
+  controllerNumber: 3,
 });
 
 const gammaEngine = new ControllerEngine({
   address: ADDRESS_GAMMA,
-  channel: 3,
-  controllerNumber: 15,
+  channel: 14,
+  controllerNumber: 4,
 });
 
 const controlEngines = [alphaEngine, betaEngine, thetaEngine, gammaEngine];
 const soundEngines = [bassEngine, padsEngine, sparklesEngine];
+// const soundEngines = [sparklesEngine];
 
 const valueMap = new Map();
 
@@ -85,7 +89,7 @@ const valueMap = new Map();
 });
 
 const SOUND_VAL_INCR = 0.05;
-const SOUND_UPDATE_INTERVAL = 1000;
+const SOUND_UPDATE_INTERVAL = 200;
 
 const CONTROL_VAL_INCR = 1;
 const CONTROL_UPDATE_INTERVAL = 250;
@@ -135,3 +139,11 @@ const updateControlEngines = () => {
 
 setInterval(updateSoundEngines, SOUND_UPDATE_INTERVAL);
 setInterval(updateControlEngines, CONTROL_UPDATE_INTERVAL);
+
+const cleanup = () => {
+  resetAll();
+  process.exit(1);
+};
+process.on('exit', cleanup);
+process.on('error', cleanup);
+process.on('SIGINT', cleanup);
