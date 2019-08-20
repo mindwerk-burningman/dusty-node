@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "startup": "sh scripts/startup.sh",
-    "startup:dev": "sh scripts/startup-dev.sh --lights=true",
-    "startup:dev:no-lights": "sh scripts/startup-dev.sh",
+    "startup:dev": "sh scripts/startup-dev.sh",
+    "startup:dev:lights": "sh scripts/startup-dev.sh --lights=true",
     "dev": "npm run stream && npm run start",
     "stream:dev": "muse-player -f data/muselab_recording.muse -s osc.udp://127.0.0.1:4224",
     "stream": "muse-io --device Muse-98A9 --osc osc.udp://localhost:4224",

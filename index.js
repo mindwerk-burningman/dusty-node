@@ -10,6 +10,7 @@ const AttentionEngine = require('./lib/attention-engine.js');
 const Constants = require('./lib/constants.js');
 const RootManager = require('./lib/root-manager.js');
 const ControllerEngine = require('./lib/controller-engine');
+const { normalize } = require('./lib/utils');
 
 const {
   ADDRESS_ALPHA,
@@ -47,6 +48,7 @@ const {
   OCTAVE_RANGE_PADS,
   OCTAVE_OFFSET_SPARKLES,
   OCTAVE_RANGE_SPARKLES,
+  CONTROLLER_ENGINE_CHANNEL,
 } = Constants;
 
 const { MUSE_LISTEN_PORT, MAX_SEND_PORT, LOCALHOST, PI_HOST, PI_PORT } = process.env;
@@ -61,7 +63,6 @@ const lightEngineBeta = new LightEngine({ client: lightClient, address: ADDRESS_
 // note engines
 const bassEngine = new NoteEngine({
   address: ADDRESS_BASS,
-  client,
   octaveOffset: OCTAVE_OFFSET_BASS,
   octaveRange: OCTAVE_RANGE_BASS,
   rootManager,
@@ -75,7 +76,6 @@ const bassEngine = new NoteEngine({
 
 const padsEngine = new NoteEngine({
   address: ADDRESS_PADS,
-  client,
   octaveOffset: OCTAVE_OFFSET_PADS,
   octaveRange: OCTAVE_RANGE_PADS,
   rootManager,
@@ -90,7 +90,6 @@ const padsEngine = new NoteEngine({
 
 const sparklesEngine = new NoteEngine({
   address: ADDRESS_SPARKLES,
-  client,
   octaveOffset: OCTAVE_OFFSET_SPARKLES,
   octaveRange: OCTAVE_RANGE_SPARKLES,
   rootManager,
@@ -104,26 +103,22 @@ const sparklesEngine = new NoteEngine({
 });
 
 const alphaEngine = new ControllerEngine({
-  address: ADDRESS_ALPHA,
-  channel: 14,
+  channel: CONTROLLER_ENGINE_CHANNEL,
   controllerNumber: 1,
 });
 
 const betaEngine = new ControllerEngine({
-  address: ADDRESS_BETA,
-  channel: 14,
+  channel: CONTROLLER_ENGINE_CHANNEL,
   controllerNumber: 2,
 });
 
 const thetaEngine = new ControllerEngine({
-  address: ADDRESS_THETA,
-  channel: 14,
+  channel: CONTROLLER_ENGINE_CHANNEL,
   controllerNumber: 3,
 });
 
 const gammaEngine = new ControllerEngine({
-  address: ADDRESS_GAMMA,
-  channel: 14,
+  channel: CONTROLLER_ENGINE_CHANNEL,
   controllerNumber: 4,
 });
 
@@ -149,10 +144,11 @@ engineMap.set(`${ADDRESS_ALPHA}_sound`, bassEngine);
 engineMap.set(`${ADDRESS_BETA}_sound`, padsEngine);
 engineMap.set(`${ADDRESS_THETA}_sound`, sparklesEngine);
 
-engineMap.set(
-  ADDRESS_ATTENTION,
-  new AttentionEngine({ address: ADDRESS_ATTENTION, client, engineMap })
-);
+// engineMap.set(
+//   ADDRESS_ATTENTION,
+//   new AttentionEngine({ address: ADDRESS_ATTENTION, client, engineMap })
+// );
+
 const statusEngine = new StatusEngine({ address: ADDRESS_IS_GOOD, client, engineMap });
 engineMap.set(ADDRESS_IS_GOOD, statusEngine);
 
@@ -178,7 +174,7 @@ const onUpdate = (msg) => {
         engineMap.get(`${address}_sound`).update(engine.getLatestNormalized());
       }
       // attention and lights get updated on all inputs
-      engineMap.get(ADDRESS_ATTENTION).update(data);
+      // engineMap.get(ADDRESS_ATTENTION).update(data);
     }
     lightEngineAlpha.update(engineMap.get(ADDRESS_ALPHA).getLatestNormalized() || 0);
     lightEngineBeta.update(engineMap.get(ADDRESS_BETA).getLatestNormalized() || 0);
