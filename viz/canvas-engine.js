@@ -66,6 +66,24 @@ const quads = [0, 1, 2, 3].map((i) => {
   });
 });
 
+const drawInfo = (q) => {
+  const buffer = 10;
+  const fontSize = 32;
+  const x = windowWidth - buffer * 2;
+  const y = q.origin.y + (q.height / 2);
+  const text = q.address.split('/').pop().toUpperCase();
+  ctx.font = `${fontSize}px sans-serif`;
+  ctx.textAlign = 'right';
+  ctx.fillStyle = q.color;
+  ctx.fillText(text, x, y + fontSize / 2);
+
+  const maxText = '2';
+  const minText = '-2';
+  ctx.font = `${fontSize / 2}px sans-serif`;
+  ctx.fillText(maxText, windowWidth - buffer, q.origin.y + buffer * 2);
+  ctx.fillText(minText, windowWidth - buffer, q.origin.y + q.height - buffer);
+};
+
 const drawBorder = (q) => {
   const y = q.origin.y + q.height;
   ctx.beginPath();
@@ -78,7 +96,7 @@ const drawBorder = (q) => {
 
 const drawBackground = (_quads) => {
   _quads.forEach((q) => {
-    // drawInfo(q);
+    drawInfo(q);
     drawBorder(q);
   });
 };
