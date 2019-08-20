@@ -36,8 +36,10 @@
   "dependencies": {
     "@solstice.sebastian/constants": "^1.1.3",
     "@solstice.sebastian/simple-moving-average": "^1.1.0",
+    "body-parser": "^1.19.0",
     "dotenv": "^6.0.0",
     "easymidi": "^1.0.2",
+    "express": "^4.17.1",
     "lodash": "^4.17.10",
     "osc": "^2.2.3",
     "random": "^2.0.12"

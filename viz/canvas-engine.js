@@ -5,7 +5,10 @@
  * move new dots to a value of quad.height * val (between -2 & 2)
  */
 
-const { ADDRESS_ALPHA, ADDRESS_BETA, ADDRESS_GAMMA, ADDRESS_THETA } = require('../lib/constants');
+const ADDRESS_ALPHA = '/muse/elements/alpha_absolute';
+const ADDRESS_BETA = '/muse/elements/beta_absolute';
+const ADDRESS_GAMMA = '/muse/elements/gamma_absolute';
+const ADDRESS_THETA = '/muse/elements/theta_absolute';
 
 const canvas = document.getElementById('canvas');
 const windowWidth = window.innerWidth;
