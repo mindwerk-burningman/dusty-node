@@ -6,11 +6,9 @@ const LightEngine = require('./lib/light-engine.js');
 const MuseEngine = require('./lib/muse-engine.js');
 const NoteEngine = require('./lib/note-engine.js');
 const StatusEngine = require('./lib/status-engine.js');
-const AttentionEngine = require('./lib/attention-engine.js');
 const Constants = require('./lib/constants.js');
 const RootManager = require('./lib/root-manager.js');
 const ControllerEngine = require('./lib/controller-engine');
-const { normalize } = require('./lib/utils');
 
 const {
   ADDRESS_ALPHA,
@@ -18,7 +16,6 @@ const {
   ADDRESS_GAMMA,
   ADDRESS_THETA,
   ADDRESS_IS_GOOD,
-  ADDRESS_ATTENTION,
 
   ADDRESS_BASS,
   ADDRESS_PADS,
@@ -144,11 +141,6 @@ engineMap.set(`${ADDRESS_ALPHA}_sound`, bassEngine);
 engineMap.set(`${ADDRESS_BETA}_sound`, padsEngine);
 engineMap.set(`${ADDRESS_THETA}_sound`, sparklesEngine);
 
-// engineMap.set(
-//   ADDRESS_ATTENTION,
-//   new AttentionEngine({ address: ADDRESS_ATTENTION, client, engineMap })
-// );
-
 const statusEngine = new StatusEngine({ address: ADDRESS_IS_GOOD, client, engineMap });
 engineMap.set(ADDRESS_IS_GOOD, statusEngine);
 
@@ -173,8 +165,6 @@ const onUpdate = (msg) => {
       if (engineMap.has(`${address}_sound`)) {
         engineMap.get(`${address}_sound`).update(engine.getLatestNormalized());
       }
-      // attention and lights get updated on all inputs
-      // engineMap.get(ADDRESS_ATTENTION).update(data);
     }
     lightEngineAlpha.update(engineMap.get(ADDRESS_ALPHA).getLatestNormalized() || 0);
     lightEngineBeta.update(engineMap.get(ADDRESS_BETA).getLatestNormalized() || 0);
