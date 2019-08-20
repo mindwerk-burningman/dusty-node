@@ -1,6 +1,5 @@
 #!/bin/bash
 
-open router/dust_more.maxpat &
 open sound-engine/sound-engine.logicx
 
 node index.js &
