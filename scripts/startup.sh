@@ -4,7 +4,7 @@ open sound-engine/sound-engine.logicx
 
 node index.js &
 P1=$!
-muse-io --device Muse-98A9 --osc osc.udp://localhost:4224 &
+muse-io --osc osc.udp://localhost:4224 &
 P2=$!
 
 ssh "pi@10.0.1.5" <<END_SCRIPT
