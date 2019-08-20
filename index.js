@@ -9,6 +9,7 @@ const StatusEngine = require('./lib/status-engine.js');
 const AttentionEngine = require('./lib/attention-engine.js');
 const Constants = require('./lib/constants.js');
 const RootManager = require('./lib/root-manager.js');
+const ControllerEngine = require('./lib/controller-engine');
 
 const {
   ADDRESS_ALPHA,
@@ -69,6 +70,7 @@ const bassEngine = new NoteEngine({
   minVelocity: MIN_VELOCITY_BASS,
   maxVelocity: MAX_VELOCITY_BASS,
   maxDuration: MAX_DURATION_BASS,
+  channels: [0, 1, 2, 3],
 });
 
 const padsEngine = new NoteEngine({
@@ -83,6 +85,7 @@ const padsEngine = new NoteEngine({
   maxVelocity: MAX_VELOCITY_PADS,
   maxDuration: MAX_DURATION_PADS,
   notesAtATime: 5,
+  channels: [4, 5, 6, 7],
 });
 
 const sparklesEngine = new NoteEngine({
@@ -97,13 +100,50 @@ const sparklesEngine = new NoteEngine({
   maxVelocity: MAX_VELOCITY_SPARKLES,
   maxDuration: MAX_DURATION_SPARKLES,
   notesAtATime: 6,
+  channels: [8, 9, 10, 11],
+});
+
+const alphaEngine = new ControllerEngine({
+  address: ADDRESS_ALPHA,
+  channel: 14,
+  controllerNumber: 1,
+});
+
+const betaEngine = new ControllerEngine({
+  address: ADDRESS_BETA,
+  channel: 14,
+  controllerNumber: 2,
+});
+
+const thetaEngine = new ControllerEngine({
+  address: ADDRESS_THETA,
+  channel: 14,
+  controllerNumber: 3,
+});
+
+const gammaEngine = new ControllerEngine({
+  address: ADDRESS_GAMMA,
+  channel: 14,
+  controllerNumber: 4,
 });
 
 // muse engines
-engineMap.set(ADDRESS_GAMMA, new MuseEngine({ address: ADDRESS_GAMMA, client }));
-engineMap.set(ADDRESS_ALPHA, new MuseEngine({ address: ADDRESS_ALPHA, client }));
-engineMap.set(ADDRESS_BETA, new MuseEngine({ address: ADDRESS_BETA, client }));
-engineMap.set(ADDRESS_THETA, new MuseEngine({ address: ADDRESS_THETA, client }));
+engineMap.set(
+  ADDRESS_ALPHA,
+  new MuseEngine({ address: ADDRESS_ALPHA, controllerEngine: alphaEngine })
+);
+engineMap.set(
+  ADDRESS_BETA,
+  new MuseEngine({ address: ADDRESS_BETA, controllerEngine: betaEngine })
+);
+engineMap.set(
+  ADDRESS_THETA,
+  new MuseEngine({ address: ADDRESS_THETA, controllerEngine: thetaEngine })
+);
+engineMap.set(
+  ADDRESS_GAMMA,
+  new MuseEngine({ address: ADDRESS_GAMMA, controllerEngine: gammaEngine })
+);
 
 engineMap.set(`${ADDRESS_ALPHA}_sound`, bassEngine);
 engineMap.set(`${ADDRESS_BETA}_sound`, padsEngine);

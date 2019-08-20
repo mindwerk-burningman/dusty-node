@@ -25,6 +25,7 @@ const bassEngine = new NoteEngine({
   maxVelocity: 80,
   maxDuration: 3000,
   // channel: 3,
+  channels: [0, 1, 2, 3],
 });
 
 const padsEngine = new NoteEngine({
