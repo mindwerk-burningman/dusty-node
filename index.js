@@ -27,7 +27,10 @@ const { MUSE_LISTEN_PORT } = process.env;
 
 const engineMap = buildEngineMap();
 
-const cleanup = () => {
+const cleanup = (err) => {
+  if (err) {
+    console.log('ERROR: ', err);
+  }
   engineMap.forEach((engine) => engine.reset());
   console.log('cleaning up...');
   process.exit(0);
@@ -68,5 +71,3 @@ process.on('SIGINT', cleanup);
 process.on('SIGUSR1', cleanup);
 process.on('SIGUSR2', cleanup);
 process.on('uncaughtException', cleanup);
-
-module.exports = { server, engineMap };
