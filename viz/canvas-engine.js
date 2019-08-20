@@ -41,7 +41,6 @@ class Quad {
     };
   }
 
-  // if 0, scaledY should be in center
   updateEntryPoint(val) {
     const negativeOffset = 0 - WAVE_MIN_VAL;
     const valRange = WAVE_MAX_VAL - WAVE_MIN_VAL;
