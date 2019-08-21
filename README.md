@@ -1,14 +1,15 @@
 # DustNode #
 
-## TODO
-
-* same midi channel for notes and CCs per fader bank
-  - i.e. instrument 3 will also have CCs 0-4 on channel 3
-* revert channel selection to runner and pass into node/controller engines
-
 ## Running
 
-* `npm run startup`
+### SoundEngine
+
+* create a virtual port via `Audio/Midi Setup.app > Window > Show Midi Studio`
+  - click on `IAC Driver`. (May need to enable it in a new configuration)
+  - add port called `DustyNode`
+  - make sure the `Device is online` checkbox is selected
+* open `./sound-engine/sound-engine.logicx`
+* if needed, copy midi controller mappings file `~/Library/Preferences/com.apple.logic.pro.cs`
 * make sure logic tracks are all in record mode (the R in arrange track is "armed" or red)
 * make sure control surfaces are for "DustyNode" (option + shift + k)
 * in Logic, de-mix midi channels via `Preferences > Recording > Recording Project Settings > "Auto demix by channel..."`
