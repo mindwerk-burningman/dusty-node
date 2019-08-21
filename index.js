@@ -31,7 +31,7 @@ const cleanup = (err) => {
   if (err) {
     console.log('ERROR: ', err);
   }
-  engineMap.forEach((engine) => engine.reset());
+  engineMap.forEach((engine) => engine.reset({}));
   console.log('cleaning up...');
   process.exit(0);
 };
