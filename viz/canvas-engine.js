@@ -21,6 +21,9 @@ canvas.height = windowHeight;
 canvas.style.width = `${windowWidth}px`;
 canvas.style.height = `${windowHeight}px`;
 
+const ctx = canvas.getContext('2d');
+ctx.fillRect(0, 0, windowWidth, windowHeight);
+
 const center = {
   x: windowWidth / 2,
   y: windowHeight / 2,
@@ -85,32 +88,34 @@ const drawInfo = (q) => {
 };
 
 const drawBorder = (q) => {
-  const y = q.origin.y + q.height;
+  const lineWidth = 1;
+  const y = q.origin.y + q.height - lineWidth;
   ctx.beginPath();
-  ctx.strokeStyle = 'white';
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+  ctx.lineWidth = lineWidth;
   ctx.moveTo(0, y);
   ctx.lineTo(windowWidth, y);
   ctx.stroke();
 };
 
 const drawBackground = (_quads) => {
+  ctx.fillRect(0, 0, windowWidth, windowHeight);
   _quads.forEach((q) => {
     drawInfo(q);
     drawBorder(q);
   });
 };
 
-const ctx = canvas.getContext('2d');
-ctx.fillRect(0, 0, windowWidth, windowHeight);
-
 const dotSize = 4;
 
 const drawDot = (quad) => {
   ctx.save();
-  ctx.fillStyle = quad.color;
   ctx.translate(quad.entryPoint.x - dotSize, quad.entryPoint.y - dotSize);
-  ctx.fillRect(0, 0, dotSize, dotSize);
+  // ctx.fillRect(0, 0, dotSize, dotSize);
+  ctx.beginPath();
+  ctx.fillStyle = quad.color;
+  ctx.arc(0, 0, dotSize, 0, Math.PI * 2, false);
+  ctx.fill();
   ctx.restore();
 };
 
@@ -143,5 +148,6 @@ wsClient.addEventListener('message', (event) => {
     update(valMap);
   } catch (err) {
     console.error('error attempting to parse event data');
+    console.error(err);
   }
 });
