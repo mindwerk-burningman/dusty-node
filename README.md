@@ -70,3 +70,7 @@ read file to mindwave (lighting script)
 
 read file to local Max (udp instead of tcp)
 `muse-player -f muselab_recording.muse -s osc.udp://127.0.0.1:9001`
+
+## Visualizer
+
+http://localhost:1234/
