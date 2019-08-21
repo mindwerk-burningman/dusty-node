@@ -1,10 +1,16 @@
 # DustNode #
 
+## TODO
+
+* same midi channel for notes and CCs per fader bank
+  - i.e. instrument 3 will also have CCs 0-4 on channel 3
+* revert channel selection to runner and pass into node/controller engines
+
 ## Running
 
 * `npm run startup`
 * make sure logic tracks are all in record mode (the R in arrange track is "armed" or red)
-* make sure control surfaces are for "from Max 1" (option + shift + k)
+* make sure control surfaces are for "DustyNode" (option + shift + k)
 * in Logic, de-mix midi channels via `Preferences > Recording > Recording Project Settings > "Auto demix by channel..."`
 
 ---

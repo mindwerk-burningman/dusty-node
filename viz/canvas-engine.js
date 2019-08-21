@@ -1,10 +1,3 @@
-/**
- * create 4 quadrants
- * draw 4 dots in center of each quadrant
- * get each to move across screen
- * move new dots to a value of quad.height * val (between -2 & 2)
- */
-
 const ADDRESS_ALPHA = '/muse/elements/alpha_absolute';
 const ADDRESS_BETA = '/muse/elements/beta_absolute';
 const ADDRESS_GAMMA = '/muse/elements/gamma_absolute';
